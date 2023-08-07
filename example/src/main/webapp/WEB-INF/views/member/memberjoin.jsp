@@ -12,7 +12,7 @@
 			<h1>회원가입</h1>
 		</div>
 		<div>
-			<form id="frm" onsubmit="return formCheck()" method="post">
+			<form id="frm" action="memberlogin.do" onsubmit="return formCheck()" method="post">
 				<div>
 					<table border="1">
 						<tr>
