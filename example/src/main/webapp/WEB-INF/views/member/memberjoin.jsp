@@ -74,10 +74,11 @@
 		let password = frm.memberPassword.value;
 		let passcheck = frm.passwordCheck.value;
 		let id = document.getElementById("btn").value;
-		if(id == 'NoCheck'){
+		
+/* 		if(id == 'NoCheck'){
 			alert("아이디 중복확인하시오");
 			return false;
-		}
+		} */
 	}
 		if(password != passcheck){
 			alert("패스워드가 다릅니다")
