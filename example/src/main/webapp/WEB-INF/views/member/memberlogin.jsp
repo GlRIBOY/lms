@@ -17,7 +17,7 @@
 					<table border="1">
 						<tr>
 							<th width="100">아이디</th>
-							<td width="200"><input type="text" id="memberId" name="memberId"></td>
+							<td width="200"><input type="text" id="memberId" name="memberId" autofocus></td>
 						</tr>
 						<tr>
 							<th>패스워드</th>
@@ -30,7 +30,7 @@
 <br>
 <div>
 <input type="submit" value="로그인">&nbsp;&nbsp;&nbsp;
-<inpyt type="reset" value="취소">
+<input type="reset" value="취소">
 </div>
 			</form>
 		</div>
