@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.giri.example.notice.mapper.ReplyMapper">
+
+	<insert id="insert"
+		parameterType="kr.giri.example.notice.service.ReplyVO">
+		<selectKey
+			resultType="kr.giri.example.notice.service.ReplyVO"
+			keyProperty="replyId,replyDate" order="BEFORE">
+			SELECT SEQ_reply.nextval as
+			replyId, sysdate as replyDate from dual
+		</selectKey>
+		insert into reply
+		values(#{replyId}, #{noticeId}, #{reply}, #{replyer},
+		#{replyDate})
+	</insert>
+
+	<select id="selectList"
+		resultType="kr.giri.example.notice.service.ReplyVO">
+		select * from reply
+		where notice_id = #{noticeId}
+		order by
+		reply_id desc
+	</select>
+
+
+	<select id="select"
+		resultType="kr.giri.example.notice.service.ReplyVO">
+		select * from reply wehre reply_id = #{replyId}
+	</select>
+
+	<delete id="delete"
+		parameterType="kr.giri.example.notice.service.ReplyVO">
+		delete from reply where reply_id = #{replyId}
+	</delete>
+	<update id="update" parameterType="kr.giri.example.notice.service.ReplyVO">
+	 update reply
+	 <set>
+	 <if test="replyId !=null">reply_id = #{replyId},</if>
+	 <if test="noticeId !=null">notice_id = #{noticeId},</if>
+	 <if test="reply !=null">reply = #{reply},</if>
+	 <if test="replyer !=null">replyer = #{replyer}</if>
+	 <if test="replyDate !=null">reply_Date=#{replyDate}</if>
+	 </set>
+	</update>
+
+
+</mapper>
