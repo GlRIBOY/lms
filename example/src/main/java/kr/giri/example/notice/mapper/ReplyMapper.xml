@@ -26,7 +26,7 @@
 
 	<select id="select"
 		resultType="kr.giri.example.notice.service.ReplyVO">
-		select * from reply wehre reply_id = #{replyId}
+		select * from reply where reply_id = #{replyId}
 	</select>
 
 	<delete id="delete"
@@ -36,12 +36,10 @@
 	<update id="update" parameterType="kr.giri.example.notice.service.ReplyVO">
 	 update reply
 	 <set>
-	 <if test="replyId !=null">reply_id = #{replyId},</if>
-	 <if test="noticeId !=null">notice_id = #{noticeId},</if>
 	 <if test="reply !=null">reply = #{reply},</if>
 	 <if test="replyer !=null">replyer = #{replyer}</if>
-	 <if test="replyDate !=null">reply_Date=#{replyDate}</if>
 	 </set>
+	 where notice_id = #{noticeId} and replyId = #{replyId}
 	</update>
 
 
