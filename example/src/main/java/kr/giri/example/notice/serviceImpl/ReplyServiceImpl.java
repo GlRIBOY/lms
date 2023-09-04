@@ -1,4 +1,4 @@
-package kr.giri.example.member.serviceImpl;
+package kr.giri.example.notice.serviceImpl;
 
 import java.util.List;
 

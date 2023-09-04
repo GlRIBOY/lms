@@ -1,8 +1,8 @@
 package kr.giri.example.common;
 
-import kr.giri.example.member.serviceImpl.ReplyServiceImpl;
 import kr.giri.example.notice.service.ReplyService;
 import kr.giri.example.notice.service.ReplyVO;
+import kr.giri.example.notice.serviceImpl.ReplyServiceImpl;
 
 public class MainExe {
 

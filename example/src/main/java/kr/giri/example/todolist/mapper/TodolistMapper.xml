@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="kr.giri.example.todolist.mapper.TodolistMapper">
+	<select id="selectList"
+		resultType="kr.giri.example.todolist.service.TodolistVO">
+		SELECT * FROM TODOLIST
+	</select>
+	<insert id="insert"
+		parameterType="kr.giri.example.todolist.service.TodolistVO">
+		<selectKey
+			resultType="kr.giri.example.todolist.service.TodolistVO"
+			keyProperty="todoId" order="BEFORE">
+			SELECT SEQ_TODOLIST.NEXTVAL AS
+			todoId FROM DUAL
+		</selectKey>
+		INSERT INTO TODOLIST VALUES(#{todoId}, #{todoContent}, NVL(#{todoDate}, sysdate))
+	</insert>
+	<delete id="delete" parameterType="kr.giri.example.todolist.service.TodolistVO">
+	DELETE FROM TODOLIST WHERE TODO_ID = #{todoId}	
+	</delete>
+</mapper>

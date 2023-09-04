@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import kr.giri.example.member.serviceImpl.ReplyServiceImpl;
 import kr.giri.example.notice.service.ReplyService;
 import kr.giri.example.notice.service.ReplyVO;
+import kr.giri.example.notice.serviceImpl.ReplyServiceImpl;
 
 /**
  * Servlet implementation class AjaxReplyAdd
