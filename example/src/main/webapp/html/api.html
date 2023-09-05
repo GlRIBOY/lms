@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <select name="sidos" id="">
+    </select>
+    <button name="delBtn">삭제</button>
+    <h3>센터목록</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>시도ID</th>
+                <th>센터명</th>
+                <th>연락처</th>
+                <th>주소</th>
+                <th>건물명</th>
+                <th>삭제여부</th>
+
+            </tr>
+        </thead>
+        <tbody id="list">
+
+        </tbody>
+    </table>
+
+    <script>
+        let url = `https://api.odcloud.kr/api/15077586/v1/centers?page=1&perPage=284&serviceKey=JP%2FuS23NqgUgilDn%2FvnUHyVnLBbGdRPSaWrNrnL8DcrinFauMWB9nFtZZPhGM%2FQoi22l9AfUDmJJKzULzej6lw%3D%3D`
+
+        let totalData = [];
+
+        fetch(url).then(resolve => resolve.json())
+            .then(centerInit)
+            .catch(console.log);
+
+        function centerInit(json) {
+            let sidos = []; // ['서울, 인천']
+
+            let aryData = json.data;
+            totalData = json.data;
+            aryData.forEach(function (elem, idx) { //=$each 
+                if (sidos.indexOf(elem.sido) == -1) {//sidos값이있으면 해당되는 인덱스 값을 반환해줌(?)
+                    sidos.push(elem.sido);
+                }
+            });
+            sidos.forEach(sido => {
+                let opt = document.createElement('option');
+                opt.innerText = sido;
+                document.querySelector('select[name=sidos]').appendChild(opt);
+            })
+            aryData.forEach((center, idx) => {
+                if (idx < 5) {
+                    document.querySelector('#list').appendChild(makeCenterInfo(center));
+                }
+            })
+        }
+
+        function makeCenterInfo(center = {}) {
+            const fields = ['id', 'centerName', 'phoneNumber', 'address', 'facilityName']
+            const tr = document.createElement('tr');
+            fields.forEach(field => {
+                const td = document.createElement('td');
+                
+                if (field == 'id') {
+                    let ref = document.createElement('a');
+                    ref.setAttribute('href', 'map.jsp?p=' + center.lat + '&q=' + center.lng+'&r='+center.centerName.substr(5)+'&s='+center.facilityName+'&t='+center.address);
+                    ref.setAttribute('target', '_blank');
+                    
+                    ref.innerText = center[field];
+                    td.appendChild(ref);
+                    td.setAttribute('align', 'center');
+                } else {
+                    td.innerText = center[field];
+                }
+                tr.appendChild(td);
+            })
+            //checkbox.
+            const td = document.createElement('td');
+            const chk = document.createElement('input');
+            chk.setAttribute('type', 'checkbox');
+            td.setAttribute('align', 'center');
+            td.appendChild(chk);
+            tr.appendChild(td);
+            return tr;
+        }
+
+        //시도리스트에 선택이벤트.
+        document.querySelector('select[name=sidos]').addEventListener('change', centerList);
+
+        function centerList(e) {
+            let searchSido = e.target.value;
+
+            //filter : 반환값이 true인 항목을 새로운 배열에 저장
+            const filterAry = totalData.filter(center => center.sido == searchSido);
+
+            document.querySelector('#list').innerHTML = '';//기존항목비우기.
+            filterAry.forEach((center, idx) => {
+                document.querySelector('#list').appendChild(makeCenterInfo(center));
+            })
+        }
+
+        //선택삭제 이벤트.
+        document.querySelector('button[name=delBtn]').addEventListener('click', delSelectedTr);
+
+        function delSelectedTr() {
+            document.querySelectorAll('#list tr input:checked').forEach(input => {
+                input.parentElement.parentElement.remove();
+            })
+
+        }
+    </script>
+</body>
+
+</html>
